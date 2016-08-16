@@ -1,0 +1,42 @@
+2016-08-16 17:51:45,420 main WARN No Root logger was configured, creating default ERROR-level Root logger with Console appender
+# JMH 1.12 (released 137 days ago, please consider updating!)
+# VM version: JDK 1.8.0_91, VM 25.91-b14
+# VM invoker: /Library/Java/JavaVirtualMachines/jdk1.8.0_91.jdk/Contents/Home/jre/bin/java
+# VM options: -Dfile.encoding=UTF-8
+# Warmup: 5 iterations, 1 s each
+# Measurement: 10 iterations, 1 s each, 100 calls per op
+# Timeout: 10 min per iteration
+# Threads: 5 threads, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: com.test.async_logging_log4j2.benchmark.AsyncLoggerBenchmarkTest.benchmarkAsyncLog
+
+# Run progress: 0.00% complete, ETA 00:00:15
+# Fork: 1 of 1
+# Warmup Iteration   1: 2016-08-16 17:51:47,287 com.test.async_logging_log4j2.benchmark.AsyncLoggerBenchmarkTest.benchmarkAsyncLog-jmh-worker-1 WARN No Root logger was configured, creating default ERROR-level Root logger with Console appender
+91236.465 ops/s
+# Warmup Iteration   2: 74652.834 ops/s
+# Warmup Iteration   3: 110837.039 ops/s
+# Warmup Iteration   4: 29346.038 ops/s
+# Warmup Iteration   5: 69126.903 ops/s
+Iteration   1: 949.764 ops/s
+Iteration   2: 690.849 ops/s
+Iteration   3: 834.612 ops/s
+Iteration   4: 442.909 ops/s
+Iteration   5: 922.379 ops/s
+Iteration   6: 958.647 ops/s
+Iteration   7: 795.275 ops/s
+Iteration   8: 876.517 ops/s
+Iteration   9: 263.692 ops/s
+Iteration  10: 730.236 ops/s
+
+
+Result "benchmarkAsyncLog":
+  746.488 ±(99.9%) 346.570 ops/s [Average]
+  (min, avg, max) = (263.692, 746.488, 958.647), stdev = 229.234
+  CI (99.9%): [399.918, 1093.058] (assumes normal distribution)
+
+
+# Run complete. Total time: 00:00:21
+
+Benchmark                                    Mode  Cnt    Score     Error  Units
+AsyncLoggerBenchmarkTest.benchmarkAsyncLog  thrpt   10  746.488 ± 346.570  ops/s

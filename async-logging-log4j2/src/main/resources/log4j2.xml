@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+	<!-- variable declaration  -->
+	<Properties>
+		<Property name="log-path">logs</Property>
+		<Property name="ARCHIVE">archive</Property>
+	</Properties>
+	
+	<!-- Appenders -->
+	<Appenders>
+		<!-- Console Log -->
+		<Console name="console-log" target="SYSTEM_OUT">
+			<PatternLayout
+				pattern="[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n" />
+		</Console>
+		
+		<!-- Rolling file Appender <trace-log>: We can declare multiple such appenders. -->
+		
+		<!-- <RollingFile name="trace-log" fileName="${log-path}/log4j2-trace.log"
+			filePattern="${log-path}/log4j2-trace-%d{yyyy-MM-dd}-%i.log">
+			<PatternLayout>
+				<pattern>[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n
+				</pattern>
+			</PatternLayout>
+			<Policies>
+				<TimeBasedTriggeringPolicy interval="1"
+					modulate="true" />
+				 <SizeBasedTriggeringPolicy size="10 KB"/>
+			</Policies>
+			<DefaultRolloverStrategy max="20"/>
+		</RollingFile> -->
+		
+		<!-- Rolling file Appender <debug-log>  -->
+		<RollingFile name="debug-log" fileName="${log-path}/log4j2-error.log"
+			filePattern="${log-path}/log4j2-error-%d{yyyy-MM-dd}-%i.log">
+			<PatternLayout>
+				<pattern>[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n
+				</pattern>
+			</PatternLayout>
+			<Policies>
+			<!-- We don't know the load on server, hence difficult to decide time interval  -->
+		    <!-- <TimeBasedTriggeringPolicy interval="1"
+					modulate="true" /> -->
+					<!-- Define log file size limit -->
+				<SizeBasedTriggeringPolicy size="100 MB"/>
+			</Policies>
+			<!-- Better to define a finite no of files, Default is 7. Again total file no is unknown which is a concern -->
+		    <DefaultRolloverStrategy max="200"/>
+		</RollingFile>
+	
+		<!-- Register Asynchronous appender -->
+		<Async name="async-debug-log">
+			<AppenderRef ref="debug-log" />
+		</Async>
+		</Appenders>
+	<Loggers>
+	
+	<!-- Define Asynchronous Logger  -->
+	 <AsyncLogger name="com.test" level="debug"
+        additivity="false">
+        <AppenderRef ref="async-debug-log" />
+       <!--  <appender-ref ref="console-log"/> -->
+    </AsyncLogger>
+    
+    <!-- Synchronous logger -->
+	 <!-- <Logger name="com.test.log4j2" level="debug" additivity="false">
+			<appender-ref ref="trace-log" />
+	</Logger> -->
+
+	<!-- <Root level="info" additivity="false"> <AppenderRef ref="console-log" 
+		/> </Root> -->
+	</Loggers>
+	<!--  Note: visit https://logging.apache.org/log4j/2.x/manual/async.html. It says all asynchronous (Appender & Logger) performs best.
+	We can mix them though. RandomAccessFileAppender gives better performance over other appenders. -->
+</Configuration>
