@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+	<!-- variable declaration -->
+	<Properties>
+		<Property name="log-path">logs</Property>
+		<Property name="ARCHIVE">archive</Property>
+	</Properties>
+
+	<!-- Appenders -->
+	<Appenders>
+		<Routing name="RoutingAppender">
+			<Routes pattern="benchmark">
+				<Route>
+					<RollingFile name="Rolling-benchmark"
+						fileName="${log-path}/benchmark.log" filePattern="${log-path}/$benchmark-%i.log">
+						<PatternLayout
+							pattern="%msg%n" />
+						<SizeBasedTriggeringPolicy size="500MB" />
+						<DefaultRolloverStrategy max="200" />
+					</RollingFile>
+				</Route>
+			</Routes>
+		</Routing>
+
+		<!-- Register Asynchronous appender -->
+		<Async name="async-debug-log">
+			<AppenderRef ref="RoutingAppender" />
+		</Async>
+	</Appenders>
+	<Loggers>
+
+	<!-- Define Asynchronous Logger -->
+	<AsyncLogger name="com.talentica" level="debug"
+			additivity="false">
+		<AppenderRef ref="async-debug-log" />
+	</AsyncLogger>
+
+	</Loggers>
+
+</Configuration>

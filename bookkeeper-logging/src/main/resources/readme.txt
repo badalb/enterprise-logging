@@ -1,0 +1,1 @@
+bookkeeper-server/bin/bookkeeper localbookie 6
