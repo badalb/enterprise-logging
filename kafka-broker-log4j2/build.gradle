@@ -1,0 +1,69 @@
+buildscript {
+	repositories {
+		mavenCentral()
+		jcenter()
+		maven { url "http://repo.spring.io/snapshot" }
+		maven { url "http://repo.spring.io/milestone" }
+		maven { url "https://plugins.gradle.org/m2/"}
+	}
+
+	dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.2.3.RELEASE")
+    }
+}
+
+apply plugin: 'eclipse'
+apply plugin: 'java'
+apply plugin: 'maven'
+apply plugin: 'spring-boot'
+apply plugin: 'idea'
+apply plugin: 'war'
+
+
+
+group = 'com.talentica'
+version = '1.0-SNAPSHOT'
+
+description = "Kafka-Log4j2"
+
+sourceCompatibility = 1.7
+targetCompatibility = 1.7
+
+repositories {
+		
+	 maven { url "http://repo.maven.apache.org/maven2" }
+	 maven { url "http://repository.jboss.org/nexus/content/groups/public" }
+	 maven { url "http://repository.jboss.org/nexus/content/repositories/deprecated" }
+	 maven { url "https://repository.jboss.org/nexus/content/repositories/releases" }
+	 mavenLocal()
+}
+
+
+
+dependencies {
+
+	providedRuntime("org.springframework.boot:spring-boot-starter-tomcat")
+	compile (group: 'org.apache.logging.log4j', name: 'log4j-api', version:'2.5')
+    compile (group: 'org.apache.logging.log4j', name: 'log4j-core', version:'2.5')
+    compile group: 'com.lmax', name: 'disruptor', version:'3.2.0'
+    compile( group: 'org.springframework.boot', name: 'spring-boot-starter-web', version:'1.2.3.RELEASE'){
+		exclude module: 'spring-boot-starter-tomcat'}
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-actuator', version:'1.2.3.RELEASE'
+    compile (group: 'org.apache.kafka', name: 'kafka_2.10', version:'0.8.1.1'){
+		exclude module: 'log4j'
+	}
+    compile group: 'com.google.code.gson', name: 'gson', version:'2.3.1'
+	compile('javax.servlet:javax.servlet-api:3.1.0')
+	compile('com.google.guava:guava:19.0')
+
+    testCompile group: 'junit', name: 'junit', version:'4.11'
+    testCompile group: 'org.mockito', name: 'mockito-core', version:'1.9.5'
+    testCompile group: 'org.hamcrest', name: 'hamcrest-library', version:'1.3'
+}
+
+
+
+war {
+	 archiveName ="kafka-log4j2.war"
+}
+
