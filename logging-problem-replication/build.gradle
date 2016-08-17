@@ -1,0 +1,42 @@
+buildscript {
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:1.3.2.RELEASE")
+	}
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply plugin: 'spring-boot'
+
+jar {
+	baseName = 'logging-problem-replication'
+	version =  '0.1.0'
+}
+
+repositories {
+	mavenCentral()
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+dependencies {
+	compile("org.springframework.boot:spring-boot-starter-web")
+	compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version:'1.0.2.RELEASE'
+	compile group: 'mysql', name: 'mysql-connector-java', version:'5.1.30'
+	compile group: 'org.flywaydb', name: 'flyway-core', version:'3.0'
+	compile group: 'org.apache.logging.log4j', name: 'log4j-api', version:'2.0'
+	compile group: 'org.apache.logging.log4j', name: 'log4j-core', version:'2.0'
+	compile("org.springframework.boot:spring-boot-starter-amqp")
+	
+	
+	testCompile("junit:junit")
+}
+
+task wrapper(type: Wrapper) {
+	gradleVersion = '2.3'
+}
