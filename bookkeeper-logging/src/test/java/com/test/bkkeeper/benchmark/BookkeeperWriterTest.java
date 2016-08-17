@@ -1,4 +1,4 @@
-package com.talentica.bkkeeper.benchmark;
+package com.test.bkkeeper.benchmark;
 
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
@@ -21,13 +21,15 @@ import com.talentica.logging.model.LogDto;
 
 
 public class BookkeeperWriterTest {
+	
+	private static LogWritter logwriter;
 
 	@Benchmark
 	@BenchmarkMode(Mode.Throughput)
 	@OutputTimeUnit(TimeUnit.SECONDS)
-	@Threads(5)
-	@Warmup(iterations = 5)
-	@Measurement(iterations = 10, batchSize = 100)
+	@Threads(1)
+	@Warmup(iterations = 2)
+	@Measurement(iterations = 2, batchSize = 5)
 	public void benchmarkAsyncLog() {
 
 		LogDto model = new LogDto();
@@ -42,12 +44,25 @@ public class BookkeeperWriterTest {
 		String logMessage = new Gson().toJson(model);
 
 		try {
-			LogWritter writer = new LogWritter();
-			writer.writeEntries(logMessage);
-			writer.close();
+			
+			getLogWriter().writeEntries(logMessage);
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	private static LogWritter getLogWriter(){
+		if(logwriter == null){
+			try {
+				logwriter = new LogWritter();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		return logwriter;
 	}
 
 	public static void main(String[] args) throws RunnerException {

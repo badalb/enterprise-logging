@@ -30,7 +30,7 @@
 	<Loggers>
 
 	<!-- Define Asynchronous Logger -->
-	<AsyncLogger name="com.talentica" level="debug"
+	<AsyncLogger name="com.test" level="debug"
 			additivity="false">
 		<AppenderRef ref="async-debug-log" />
 	</AsyncLogger>
